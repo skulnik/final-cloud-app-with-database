@@ -9,7 +9,6 @@ except Exception:
 from django.conf import settings
 import uuid
 
-
 # Instructor model
 class Instructor(models.Model):
     user = models.ForeignKey(
@@ -21,7 +20,6 @@ class Instructor(models.Model):
 
     def __str__(self):
         return self.user.username
-
 
 # Learner model
 class Learner(models.Model):
@@ -51,7 +49,6 @@ class Learner(models.Model):
         return self.user.username + "," + \
                self.occupation
 
-
 # Course model
 class Course(models.Model):
     name = models.CharField(null=False, max_length=30, default='online course')
@@ -67,14 +64,12 @@ class Course(models.Model):
         return "Name: " + self.name + "," + \
                "Description: " + self.description
 
-
 # Lesson model
 class Lesson(models.Model):
-    title = models.CharField(max_length=200, default="title")
+    title = models.CharField(null=False, max_length=200, default="title")
     order = models.IntegerField(default=0)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     content = models.TextField()
-
 
 # Enrollment model
 # <HINT> Once a user enrolled a class, an enrollment entry should be created between the user and course
@@ -94,7 +89,6 @@ class Enrollment(models.Model):
     mode = models.CharField(max_length=5, choices=COURSE_MODES, default=AUDIT)
     rating = models.FloatField(default=5.0)
 
-
 # <HINT> Create a Question Model with:
     # Used to persist question content for a course
     # Has a One-To-Many (or Many-To-Many if you want to reuse questions) relationship with course
@@ -103,11 +97,11 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 class Question(models.Model):
     # Foreign key to lesson
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     # question text
     question_text = models.CharField(max_length=100)
     # question grade/mark
-    grade = models.FloatField(default=0)
+    grade = models.IntegerField(default=1)
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -131,6 +125,9 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=50)
     is_choice_correct = models.BooleanField(default=False)
+     
+    def __str__(self):
+        return self.choice_text
 
 # <HINT> The submission model
 # One enrollment could have multiple submission
