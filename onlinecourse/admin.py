@@ -17,13 +17,10 @@ class CourseAdmin(admin.ModelAdmin):
 
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title']
-
-class QuestionInline(admin.StackedInline):
-    model = Question
-    
+   
 class ChoiceInline(admin.StackedInline):
     model = Choice
-    extra = 3
+    extra = 4
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]

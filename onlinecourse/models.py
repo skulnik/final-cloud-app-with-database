@@ -97,9 +97,9 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 class Question(models.Model):
     # Foreign key to lesson
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)
     # question text
-    question_text = models.CharField(max_length=100)
+    question_text = models.CharField(max_length=200)
     # question grade/mark
     grade = models.IntegerField(default=1)
 
@@ -123,7 +123,7 @@ class Question(models.Model):
     # Other fields and methods you would like to design
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=50)
+    choice_text = models.CharField(max_length=200)
     is_choice_correct = models.BooleanField(default=False)
      
     def __str__(self):
