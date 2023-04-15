@@ -57,10 +57,16 @@
             
 
             <!-- A collapse example here: -->
+    {% if user.is_authenticated %}
+    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#exam">Take Exam</button>
     <div id="exam" class="collapse">
         Click to expand elements within the collapse div
     </div>
-
+    {% else %}
+    <div class="navbar-brand">
+        Login to take the Exam
+    </div>
+    {% endif %}
             
 
             <!-- <HINT> If user is authenticated, show course exam with a list of question -->
