@@ -60,7 +60,14 @@
     {% if user.is_authenticated %}
     <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#exam">Take Exam</button>
     <div id="exam" class="collapse">
-        Click to expand elements within the collapse div
+        {% for question in course.question_set.all %}
+            <div class="card mt-1">
+                <div class="card-header"><h5>{{question.order|add:1}} {{question.question_text}}</h5></div>
+                    {% for choice in question.choice_set.all %}
+                        <div class="card-body">{{choice.order|add:1}} {{choice.choice_text}}</div>
+                    {% endfor %}
+            </div>
+         {% endfor %}
     </div>
     {% else %}
     <div class="navbar-brand">
